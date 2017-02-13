@@ -25,6 +25,11 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.Dimension;
+import java.awt.Component;
+import javax.swing.SwingConstants;
+import java.awt.Point;
+import java.awt.Cursor;
+import java.awt.SystemColor;
 
 public class WifiSwitch {
 
@@ -112,7 +117,7 @@ public class WifiSwitch {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                	if (plugOn.isEnabled()) {
+                	if (plug.isOn()) {
 						turnOffPlug();
 					}
 					else {
@@ -156,7 +161,6 @@ public class WifiSwitch {
 			}
         }
 		} catch (Exception e) {
-			errorOnConnect();
 			
 		}
 	}
@@ -225,9 +229,13 @@ public class WifiSwitch {
 	 */
 	private void initialize() {
 		frmWifiswitchSettings = new JFrame();
+		frmWifiswitchSettings.getContentPane().setBackground(SystemColor.window);
+		frmWifiswitchSettings.setBackground(SystemColor.window);
+		frmWifiswitchSettings.setLocationByPlatform(true);
 		frmWifiswitchSettings.getContentPane().setSize(new Dimension(600, 400));
 		frmWifiswitchSettings.setTitle("WifiSwitch Settings");
 		frmWifiswitchSettings.getContentPane().setLayout(null);
+		frmWifiswitchSettings.setLocation(600, 300);
 		
 		JLabel lblIpAddress = new JLabel("Ip Address");
 		lblIpAddress.setBounds(10, 11, 68, 14);
@@ -251,6 +259,8 @@ public class WifiSwitch {
 		textField_1.setColumns(10);
 		
 		JButton btnRefresh = new JButton("Refresh");
+		btnRefresh.setBackground(SystemColor.control);
+		btnRefresh.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnRefresh.setBounds(10, 63, 89, 23);
 		frmWifiswitchSettings.getContentPane().add(btnRefresh);
 		
@@ -267,6 +277,7 @@ public class WifiSwitch {
 		frmWifiswitchSettings.getContentPane().add(lblConnectedstatus);
 		
 		btnOn = new JButton("Off");
+		btnOn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		btnOn.setBounds(10, 172, 59, 23);
 		frmWifiswitchSettings.getContentPane().add(btnOn);
 		
@@ -297,7 +308,8 @@ public class WifiSwitch {
 		
 		
 		JButton btnApply = new JButton("Apply");
-		btnApply.setBounds(322, 280, 89, 23);
+		btnApply.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnApply.setBounds(386, 327, 89, 23);
 		frmWifiswitchSettings.getContentPane().add(btnApply);
 		btnApply.addActionListener(new ActionListener() {
             @Override
@@ -314,7 +326,8 @@ public class WifiSwitch {
         });
 		
 		JButton btnOk = new JButton("Ok");
-		btnOk.setBounds(421, 280, 89, 23);
+		btnOk.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnOk.setBounds(485, 327, 89, 23);
 		frmWifiswitchSettings.getContentPane().add(btnOk);
 		
 		btnOk.addActionListener(new ActionListener() {
@@ -335,7 +348,8 @@ public class WifiSwitch {
 		
 		
 		JButton btnCancel = new JButton("Cancel");
-		btnCancel.setBounds(223, 280, 89, 23);
+		btnCancel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnCancel.setBounds(287, 327, 89, 23);
 		frmWifiswitchSettings.getContentPane().add(btnCancel);
 		
 		btnCancel.addActionListener(new ActionListener() {
@@ -347,8 +361,27 @@ public class WifiSwitch {
 		
 		
 		JLabel lblDesignedByInsxnity = new JLabel("Designed By Insxnity");
-		lblDesignedByInsxnity.setBounds(10, 284, 179, 14);
+		lblDesignedByInsxnity.setLocation(new Point(600, 400));
+		lblDesignedByInsxnity.setBounds(10, 331, 179, 14);
 		frmWifiswitchSettings.getContentPane().add(lblDesignedByInsxnity);
+		
+		JLabel lblExitProgram = new JLabel("Exit Program");
+		lblExitProgram.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		lblExitProgram.setHorizontalAlignment(SwingConstants.RIGHT);
+		lblExitProgram.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		lblExitProgram.setBounds(462, 11, 112, 14);
+		frmWifiswitchSettings.getContentPane().add(lblExitProgram);
+		lblExitProgram.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (e.getButton() == MouseEvent.BUTTON1) {
+                	frmWifiswitchSettings.dispose();
+                    final SystemTray tray = SystemTray.getSystemTray();
+                    tray.remove(trayIcon);
+                    System.exit(0);
+                }
+            }
+        });
 		
 		try {
 			refreshGUI();
